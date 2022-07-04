@@ -1,3 +1,5 @@
+# ALL CONVERSIONS
+
 # DENARY TO BINARY
 def dec2bin(num):
     binary=""
@@ -75,14 +77,13 @@ def hex2dec(num):
         pov +=1
     return denary
 
-print(hex2dec("1000"))
 
 #HEX 2 BIN
 def hex2bin(num):
-    str(num)
+    num = str(num)
     num = hex2dec(num)
     num = dec2bin(num)
     return num
 
-print(hex2bin(1000))
+
 
