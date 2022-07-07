@@ -1,23 +1,15 @@
-def binary_search(a, num_list):
-    original_list= num_list.copy()
-    num_list.sort()
-
-    while True:
-        n = len(num_list) // 2
-        if a == num_list[n]:
-            o = original_list.index(num_list[n])
-            return f"the number is at position {o+1}"
-        elif a < num_list[n]:
-            num_list = num_list[:n]
-        else:
-            num_list = num_list[n:]
-
-
 
 def linear_search(a, list):
+    o = 1
     for n in list:
         if a == n:
-            return list.index(n) + 1
+            return o
+        else:
+            n += 1
+            o +=1
+
+list = [1,2,5,4,8,44,55,66,11,22,33,88]
+print(binary_search(11,list))
 
 
 
