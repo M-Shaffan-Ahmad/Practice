@@ -1,21 +1,29 @@
 #PROGRAM FOR LOGIN AND REGISTRATION
-import fileinput
 from tkinter import *
+from file_sorting import file_sort
 
-
-
+y_axis = 60
+height_entry = 10
+seperator=15
 
 #DEFS START
 
+def file_set():
+	file_sort("Users_credentials.txt")
+	root.destroy()
+
 def clean():
-	clean = Label(root,text="                                                                                                                          ")
-	clean.place(x=70, y=y_axis + 170)
+	result("      "*20,)
+	i=0
+	while True:
+		result("       "*15,240, y_axis+i)
+		i+=20
+		if i ==160:
+			break
 
-
-def result(display, a=80, n=230):
+def result(display, a=100, n=230+seperator):
 	result = Label(root, text=display, font=("Calibri", "10"))
-	result.place(x=a, y=n)
-
+	result.place(x=a, y=n+seperator)
 
 def clear_fields(): #working perfect
 	first.delete(0,END)
@@ -27,7 +35,6 @@ def clear_fields(): #working perfect
 	phone_no.delete(0, END)
 	clean()
 
-
 def collect_log(): #fine
 	clean()
 	info =[username.get(),password.get(),dob.get()]
@@ -37,7 +44,6 @@ def collect_log(): #fine
 	file = open("Users_credentials.txt", "r")
 	for data in file:
 		#data = file.readline()
-		james = []
 		data = data.split()
 
 		name = []
@@ -51,14 +57,12 @@ def collect_log(): #fine
 
 	result(output_text)
 
-
 def collect_reg(): #working fine
 	clean()
 
 	#Validation of entry
 	first_check= first.get()
 	first_check_pass=False
-	first_check.capitalize()
 	check= first_check.isalpha()
 	if first_check=="":
 		result("Please fill the field", 240, y_axis)
@@ -69,7 +73,6 @@ def collect_reg(): #working fine
 
 	last_check = last.get()
 	last_check_pass=False
-	last_check.capitalize()
 	check = last_check.isalpha()
 	if last_check == "":
 		result("Please fill the field", 240, y_axis+20)
@@ -80,8 +83,6 @@ def collect_reg(): #working fine
 
 	username_check = username.get()
 	username_check_pass=False
-	username_check.capitalize()
-	check = username_check.isalpha()
 	if username_check == "":
 		result("Please fill the field", 240, y_axis+40)
 	elif check == False:
@@ -131,7 +132,7 @@ def collect_reg(): #working fine
 
 	phone_no_check = phone_no.get()
 	phone_no_check_pass=False
-	a=phone_no_check[:2]+phone_no_check[3:]
+	a="".join(phone_no_check.split())
 	check=a.isnumeric()
 	if phone_no_check=="":
 		result("Please fill the field", 240, y_axis + 120)
@@ -141,40 +142,36 @@ def collect_reg(): #working fine
 		phone_no_check_pass=True
 
 	if first_check_pass and last_check_pass and username_check_pass and password_check_pass and dob_check_pass and email_check_pass and phone_no_check_pass:
-		data = [first.get(), last.get(), username.get(), password.get(), dob.get(), email.get(), phone_no.get()]
-
+		data = [first.get(), last.get(), username.get(), password.get(), dob.get(), email.get(), ("+"+phone_no.get())]
 		user_file = open("Users_credentials.txt", "a")
 		user_file.write(str(data) + "\n")
 		user_file.close()
 
 		result("You are successfully registered")
 
-
-
 def regg(): #wroking perfect
 	clear_fields()
 	#display
-	first_.place(x=40, y=y_axis)
-	first.place(x=110, y=y_axis)
+	first_.place(x=40, y=y_axis+seperator)
+	first.place(x=110, y=y_axis+seperator)
 
-	last_.place(x=40, y=y_axis + 20)
-	last.place(x=110, y=y_axis + 20)
+	last_.place(x=40, y=y_axis + 20+seperator)
+	last.place(x=110, y=y_axis + 20+seperator)
 
-	email_.place(x=40, y=y_axis + 100)
-	email.place(x=110, y=y_axis + 100)
+	email_.place(x=40, y=y_axis + 100+seperator)
+	email.place(x=110, y=y_axis + 100+seperator)
 
-	phone_no_.place(x=40, y=y_axis + 120)
-	phone_no.place(x=110, y=y_axis + 120)
+	phone_no_.place(x=40, y=y_axis + 120+seperator)
+	phone_no.place(x=110, y=y_axis + 120+seperator)
 
 	login_button.place_forget()
-	register_button.place(x=110, y=y_axis + 140)
+	register_button.place(x=110, y=y_axis + 140+seperator)
 
 	clean()
 
-
 def logg(): #working perfect
 	clear_fields()
-	login_button.place(x=190, y=y_axis + 140)
+	login_button.place(x=190, y=y_axis + 140+seperator)
 
 	register_button.place_forget()
 	first.place_forget()
@@ -190,69 +187,66 @@ def logg(): #working perfect
 #DEFS ENDS
 
 
-y_axis = 60
+
 
 #DISPLAY
 root = Tk()
 root.title("Registration and Login")
-root.geometry("450x300")
+root.geometry("450x350")
 
 #Main display
 heading = Label(root, text="Registration and Login", font=("Calibri", "20"))
 heading.place(x=40, y=8)
 
-username = Entry(root)
+username = Entry(root, font=("Calibri", height_entry))
 username_ = Label(root, text="Username")
 
-password = Entry(root)
+password = Entry(root,font=("Calibri", height_entry))
 password_ = Label(root, text="Password")
 
-dob = Entry(root, width=13)
+dob = Entry(root, width=14,font=("Calibri", height_entry))
 dob_ = Label(root, text="Dob (DD/MM/YYYY)")
 
-username_.place(x=40, y=y_axis+ 40)
-username.place(x=110, y=y_axis+ 40)
+username_.place(x=40, y=y_axis+ 40+seperator)
+username.place(x=110, y=y_axis+ 40+seperator)
 
-password_.place(x=40, y=y_axis + 60)
-password.place(x=110, y=y_axis + 60)
+password_.place(x=40, y=y_axis + 60+seperator)
+password.place(x=110, y=y_axis + 60+seperator)
 
-dob_.place(x=40, y=y_axis + 80)
-dob.place(x=153, y=y_axis + 80)
+dob_.place(x=40, y=y_axis + 80+seperator)
+dob.place(x=153, y=y_axis + 80+seperator)
 
 
 login_button = Button(root, text="Login", command=collect_log)
-login_button.place(x=190, y=y_axis + 140)
-
-
+login_button.place(x=190, y=y_axis + 140+seperator)
 
 
 registering = Button(root, text="Register", bd=3, command=regg)
-registering.place(x=130, y=y_axis + 200)
+registering.place(x=130, y=y_axis + 220+seperator)
 
 or_block = Label(root, text="or", font=("Calibri", "15"))
-or_block.place(x=190, y=y_axis + 200)
-
+or_block.place(x=190, y=y_axis + 220+seperator)
 login = Button(root, text="Login", bd=3, command=logg)
-login.place(x=220, y=y_axis + 200)
-
+login.place(x=220, y=y_axis + 220+seperator)
 
 #registration display start
-first = Entry(root)
+first = Entry(root,font=("Calibri", height_entry))
 first_ = Label(root, text="First name")
-last = Entry(root)
+last = Entry(root,font=("Calibri", height_entry))
 last_ = Label(root, text="Last name")
 
-email = Entry(root)
+email = Entry(root,font=("Calibri", height_entry))
 email_ = Label(root, text="Email")
 
-phone_no = Entry(root)
+phone_no = Entry(root,font=("Calibri", height_entry))
 phone_no_ = Label(root, text="Phone no.")
 
 register_button = Button(root, text="Register", command=collect_reg)
 #registration display end
 
 logg()
-
+root.protocol("WM_DELETE_WINDOW", file_set)
 root.mainloop()
+
 
 
