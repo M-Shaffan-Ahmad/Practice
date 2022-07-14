@@ -1,6 +1,7 @@
 #PROGRAM FOR LOGIN AND REGISTRATION
 from tkinter import *
 from file_sorting import file_sort
+import csv
 
 y_axis = 60
 height_entry = 10
@@ -9,7 +10,7 @@ seperator=15
 #DEFS START
 
 def file_set():
-	file_sort("Users_credentials.txt")
+	file_sort("User_credentials")
 	root.destroy()
 
 def clean():
@@ -41,19 +42,21 @@ def collect_log(): #fine
 
 	output_text = "Invalid credentials, please register if not registered yet"
 
-	file = open("Users_credentials.txt", "r")
-	for data in file:
-		#data = file.readline()
-		data = data.split()
+	file = open("User_credentials", "r")
+	reader = csv.reader(file)
+	row = []
+	rows = []
 
-		name = []
-		for i in data:
-			i = i.strip("[]")
-			i = i.strip(",")
-			i = i.strip("\'")
-			name.append(i)
-		if name[2] == info[0] and name[3] == info[1] and name[4] == info[2]:
+	try:
+		for i in range(10000000000):
+			row = next(reader)
+			rows.append(row)
+	except StopIteration:
+		a=1
+	for i in rows:
+		if i[2] == info[0] and i[3] == info[1] and i[4] == info[2]:
 			output_text = "Successful logged in"
+
 
 	result(output_text)
 
@@ -125,7 +128,7 @@ def collect_reg(): #working fine
 	check2 = email_check[-4:]
 	if email_check == "":
 		result("Please fill the field", 240, y_axis + 100)
-	elif check == -1 or check2 != ".com":
+	elif check == -1 or check2 != ".com" or len(email_check)<13:
 		result("PLease enter a valid email address", 240, y_axis + 100)
 	else:
 		email_check_pass=True
@@ -143,9 +146,10 @@ def collect_reg(): #working fine
 
 	if first_check_pass and last_check_pass and username_check_pass and password_check_pass and dob_check_pass and email_check_pass and phone_no_check_pass:
 		data = [first.get(), last.get(), username.get(), password.get(), dob.get(), email.get(), ("+"+phone_no.get())]
-		user_file = open("Users_credentials.txt", "a")
-		user_file.write(str(data) + "\n")
-		user_file.close()
+		file = open("User_credentials", "a")
+		writer = csv.writer(file)
+		writer.writerow(data)
+		file.close()
 
 		result("You are successfully registered")
 
@@ -170,6 +174,7 @@ def regg(): #wroking perfect
 	clean()
 
 def logg(): #working perfect
+	file_sort("User_credentials")
 	clear_fields()
 	login_button.place(x=190, y=y_axis + 140+seperator)
 
