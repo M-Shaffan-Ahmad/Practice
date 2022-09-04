@@ -1,5 +1,6 @@
 import pyttsx3
 from tkinter import *
+import databse
 
 engine = pyttsx3.init()
 
@@ -40,7 +41,8 @@ def voice_f():
 def play():
     engine.runAndWait()
 
-def dis(text="Please enter something"):
+def dis(name,text="Please enter something"):
+    databse.database_up(text, name+".mp3")
     engine.say(text)
     play()
 

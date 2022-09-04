@@ -3,6 +3,8 @@ import Text2Speech_back as t
 from tkinter import *
 
 
+
+
 root = Tk()
 root.title("Text to Speech")
 root.geometry("250x300")
@@ -14,7 +16,7 @@ Title.place(x=12, y= 20)
 text_input=Entry(root, font=("Vareenes",10 ))
 text_input.place(x=15, y=80, width =220)
 ################
-play=Button(root, text="PLAY", command=lambda : t.dis(text_input.get()))
+play=Button(root, text="PLAY", command=lambda : t.dis(save_name.get(), text_input.get()))
 play.place(x=100, y = 110)
 ################
 save_name=Entry(root)
@@ -41,5 +43,9 @@ voice_fe= Button(root, text="VOICE_FEMAlE", command=t.voice_f)
 voice_fe.place(x=10, y=200)
 voice_ma.place(x=10, y=230)
 ############
+
+
 root.mainloop()
+
+
 
